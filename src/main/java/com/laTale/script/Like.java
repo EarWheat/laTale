@@ -1,10 +1,12 @@
 package com.laTale.script;
 
-import com.alibaba.fastjson.JSONObject;
-import com.laTale.constants.PointLocationConstants;
+import com.laTale.common.FindPicLocation;
 import com.laTale.model.Location;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 
 /**
@@ -15,19 +17,16 @@ import java.awt.*;
  */
 public class Like {
 
-    public Location findLikeIcon(Robot robot){
-        Location start = new Location(400, 850);
-        int moveY = PointLocationConstants.GAME_LEFT_BOTTOM.getY() - start.getY();
-        int moveX = PointLocationConstants.GAME_RIGHT_BOTTOM.getX() - start.getX();
-        // 从上往下扫
-        Location temp = start;
-        for (int i = 0; i < moveX; i++) {
-            for (int j = 0; j < moveY; j++) {
-                temp.setX(start.getX() + i);
-                temp.setY(start.getY() + j);
-                Color pixelColor = robot.getPixelColor(temp.getX(), temp.getY());
-                System.out.println(JSONObject.toJSONString(pixelColor));
-            }
+    public Location findLike(Robot robot) {
+        try {
+            int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+            int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+            BufferedImage targetImage = ImageIO.read(new File("/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/like.png"));
+            BufferedImage sourceImage = robot.createScreenCapture(new Rectangle(0, 0, width, height));
+            FindPicLocation.saveBfImage(sourceImage,"/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/screen.png");
+            return FindPicLocation.find(targetImage, sourceImage);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }

@@ -208,7 +208,7 @@ public class FindPicPoint {
 
     public static void main(String[] args) throws AWTException {
         Robot robot = new Robot();
-        String imgPath = "/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/screen.png";
+        String imgPath = "/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/like.png";
         FindPicPoint findPicPoint = new FindPicPoint(robot, imgPath);
         System.out.println(findPicPoint.findX);
         System.out.println(findPicPoint.findY);

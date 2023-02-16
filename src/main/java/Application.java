@@ -1,3 +1,5 @@
+import com.laTale.common.Mouse;
+import com.laTale.model.Location;
 import com.laTale.script.Like;
 
 import java.awt.*;
@@ -11,8 +13,11 @@ import java.awt.*;
 public class Application {
 
     public static void main(String[] args) throws AWTException {
-        Like like =new Like();
         Robot robot = new Robot();
-        like.findLikeIcon(robot);
+        Mouse mouse = new Mouse(robot);
+        Like like = new Like();
+        Location likeLocation = like.findLike(robot);
+        mouse.move(likeLocation);
+        System.out.println("X:" + likeLocation.getX() + "====Y:" + likeLocation.getY());
     }
 }
