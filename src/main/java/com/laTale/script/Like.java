@@ -23,7 +23,7 @@ public class Like {
             int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
             BufferedImage targetImage = ImageIO.read(new File("/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/like.png"));
             BufferedImage sourceImage = robot.createScreenCapture(new Rectangle(0, 0, width, height));
-            FindPicLocation.saveBfImage(sourceImage,"/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/screen.png");
+            FindPicLocation.saveBfImage(sourceImage);
             return FindPicLocation.find(targetImage, sourceImage);
         } catch (Exception e) {
             e.printStackTrace();

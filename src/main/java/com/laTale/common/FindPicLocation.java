@@ -78,9 +78,17 @@ public class FindPicLocation {
         return bfImage;
     }
 
-    public static void saveBfImage(BufferedImage bufferedImage, String savePath) {
+    public static void saveBfImage(BufferedImage bufferedImage) {
         try {
-            ImageIO.write(bufferedImage, "png", new File(savePath));
+            ImageIO.write(bufferedImage, "png", new File("/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/screen.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveBfImage(BufferedImage bufferedImage, String path) {
+        try {
+            ImageIO.write(bufferedImage, "png", new File(path));
         } catch (Exception e) {
             e.printStackTrace();
         }
