@@ -62,14 +62,13 @@ public class Mining implements Serializable {
 //        Mouse.click(robot, startMining.getX(), startMining.getY());
         // ================
         // 第一步：截图挖矿区域
-        int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        BufferedImage minerArea = robot.createScreenCapture(new Rectangle(0, 0, width, height));
+        minerAreaLeftTop = new Location(530,130);
+        BufferedImage minerArea = robot.createScreenCapture(new Rectangle(minerAreaLeftTop.getX(), minerAreaLeftTop.getY(), 600, 400));
         FindPicLocation.saveBfImage(minerArea);
         // 第二步：找到钻头位置
         try {
             BufferedImage drillImg = ImageIO.read(new File(DRILL_IMG_PATH));
-            Location location = FindPicLocation.find(drillImg, minerArea);
+            Location location = FindPicLocation.find(drillImg, minerArea, minerAreaLeftTop);
             mouse.move(location);
         } catch (Exception e){
             e.printStackTrace();
@@ -82,14 +81,13 @@ public class Mining implements Serializable {
 
     public static void main(String[] args) throws AWTException {
         Robot robot = new Robot();
-        BufferedImage screenCapture = robot.createScreenCapture(new Rectangle(255, 300, 10, 20));
-        FindPicLocation.saveBfImage(screenCapture, DRILL_IMG_PATH);
+        // 目标图
+        BufferedImage drill = robot.createScreenCapture(new Rectangle(790, 410, 10, 20));
+        FindPicLocation.saveBfImage(drill, DRILL_IMG_PATH);
+//        int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+//        int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+//        Mining mining = new Mining(robot, new Location(0, 0), new Location(width,height));
         Mining mining = new Mining(robot);
-        // 设置挖矿区域
-        Location leftTop = new Location(0,75);
-        Location rightBottom = new Location(650,400);
-        mining.setMinerAreaLeftTop(leftTop);
-        mining.setMinerAreaRightBottom(rightBottom);
         mining.start();
     }
 }

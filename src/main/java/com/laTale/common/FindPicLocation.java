@@ -27,8 +27,8 @@ public class FindPicLocation {
      * @param sourceImage
      * @return
      */
-    public static Location find(BufferedImage targetImg, BufferedImage sourceImage) {
-        Location targetLocation = new Location();
+    public static Location find(BufferedImage targetImg, BufferedImage sourceImage, Location sourceLeftTop) {
+        Location targetLocation = new Location(sourceLeftTop.getX(), sourceLeftTop.getY());
         int sourceImgHeight = sourceImage.getHeight();
         int sourceShotImgWidth = sourceImage.getWidth();
         int targetImgHeight = targetImg.getHeight();
@@ -48,10 +48,12 @@ public class FindPicLocation {
                     if (isFinded) {
                         //0
                         int maxY = y + targetImgHeight;
-                        targetLocation.setY((y + maxY) / 2);
+                        targetLocation.setY(targetLocation.getY() + ((y + maxY) / 2));
+//                        targetLocation.setY((y + maxY) / 2);
                         //1
                         int maxX = x + targetImgWidth;
-                        targetLocation.setX((x + maxX) / 2);
+                        targetLocation.setX(targetLocation.getX() + ((x + maxX) / 2));
+//                        targetLocation.setX((x + maxX) / 2);
                         break;
                     }
                 }
