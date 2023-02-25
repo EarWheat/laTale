@@ -18,7 +18,7 @@ import java.io.IOException;
 public class FindPicLocation {
 
 
-    public static final Double MATCH_RATE = 0.5;
+    public static final Double MATCH_RATE = 0.1;
 
     /**
      * 从sourceImage中匹配targetImg
@@ -38,10 +38,10 @@ public class FindPicLocation {
         //遍历屏幕截图像素点数据
         for (int y = 0; y < sourceImgHeight - targetImgHeight; y++) {
             for (int x = 0; x < sourceShotImgWidth - targetImgWidth; x++) {
-                if ((targetImageRGBData[0][0] ^ sourceImageRGBData[y][x]) == 0
-                        && (targetImageRGBData[0][targetImgWidth - 1] ^ sourceImageRGBData[y][x + targetImgWidth - 1]) == 0
-                        && (targetImageRGBData[targetImgHeight - 1][targetImgWidth - 1] ^ sourceImageRGBData[y + targetImgHeight - 1][x + targetImgWidth - 1]) == 0
-                        && (targetImageRGBData[targetImgHeight - 1][0] ^ sourceImageRGBData[y + targetImgHeight - 1][x]) == 0) {
+//                if ((targetImageRGBData[0][0] ^ sourceImageRGBData[y][x]) == 0
+//                        && (targetImageRGBData[0][targetImgWidth - 1] ^ sourceImageRGBData[y][x + targetImgWidth - 1]) == 0
+//                        && (targetImageRGBData[targetImgHeight - 1][targetImgWidth - 1] ^ sourceImageRGBData[y + targetImgHeight - 1][x + targetImgWidth - 1]) == 0
+//                        && (targetImageRGBData[targetImgHeight - 1][0] ^ sourceImageRGBData[y + targetImgHeight - 1][x]) == 0) {
 
                     boolean isFinded = isMatchAll(y, x, targetImgHeight, targetImgWidth, sourceImgHeight, sourceShotImgWidth, targetImageRGBData, sourceImageRGBData);
                     //如果比较结果完全相同，则说明图片找到，填充查找到的位置坐标数据到查找结果数组。
@@ -56,7 +56,7 @@ public class FindPicLocation {
 //                        targetLocation.setX((x + maxX) / 2);
                         break;
                     }
-                }
+//                }
             }
         }
         return targetLocation;
