@@ -20,7 +20,7 @@ public class FindPicLocation {
 
     public static final Double MATCH_RATE = 0.1;
 
-    public static final Integer RGB_RATE = 3;
+    public static final Integer RGB_RATE = 5;
 
     /**
      * 从sourceImage中匹配targetImg

@@ -8,6 +8,7 @@ import org.omg.PortableInterceptor.INACTIVE;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -44,18 +45,37 @@ public class Fishing {
     public Integer fishAreaHeight;
 
     /**
-     * 点击开始挖矿位置
+     * 钩子界面左上角
      */
-    public Location startMining;
+    public Location gouZiAreaLeftTop;
+
+    /**
+     * 钩子界面右下角
+     */
+    public Location gouZiAreaRightBottom;
+
+    /**
+     * 钩子界面宽
+     */
+    public Integer gouZiAreaWidth;
+
+    /**
+     * 钩子界面高
+     */
+    public Integer gouZiAreaHeight;
 
     public Robot robot;
 
-    public Fishing(Robot robot, Location fishAreaLeftTop, Location fishAreaRightBottom) {
+    public Fishing(Robot robot, Location fishAreaLeftTop, Location fishAreaRightBottom, Location gouZiAreaLeftTop, Location gouZiAreaRightBottom) {
         this.robot = robot;
         this.fishAreaLeftTop = fishAreaLeftTop;
         this.fishAreaRightBottom = fishAreaRightBottom;
         this.fishAreaWidth = fishAreaRightBottom.getX() - fishAreaLeftTop.getX();
         this.fishAreaHeight = fishAreaRightBottom.getY() - fishAreaLeftTop.getY();
+        this.gouZiAreaLeftTop = gouZiAreaLeftTop;
+        this.gouZiAreaRightBottom = gouZiAreaRightBottom;
+        this.gouZiAreaWidth = gouZiAreaRightBottom.getX() - gouZiAreaLeftTop.getX();
+        this.gouZiAreaHeight = gouZiAreaRightBottom.getY() - gouZiAreaLeftTop.getY();
     }
 
     public Fishing(Robot robot, Location fishAreaLeftTop, Integer fishAreaWidth, Integer fishAreaHeight) {
@@ -73,21 +93,26 @@ public class Fishing {
 //        Mouse.click(robot, startMining.getX(), startMining.getY());
         // ================
         // 第一步：截图挖矿区域
-        BufferedImage fishImg = ImageIO.read(new File(FISH_IMG_PATH));
-        BufferedImage gouZiImg = ImageIO.read(new File(GOU_IMG_PATH));
-//        while (true) {
+        while (true) {
             BufferedImage fishArea = robot.createScreenCapture(new Rectangle(fishAreaLeftTop.getX(), fishAreaLeftTop.getY(), fishAreaWidth, fishAreaHeight));
-            ImageUtil.saveBfImage(fishArea);
+            BufferedImage gouZiArea = robot.createScreenCapture(new Rectangle(gouZiAreaLeftTop.getX(), gouZiAreaLeftTop.getY(), gouZiAreaWidth, gouZiAreaHeight));
+            ImageUtil.saveBfImage(gouZiArea);
             // 第二步：找到钻头和鱼的位置
             try {
-//                Location location = FindPicLocation.findImg(fishImg, fishArea, fishAreaLeftTop);
-                Location colorLocation = FindPicLocation.findColor(new int[]{250,250,250}, fishArea, fishAreaLeftTop);
-                mouse.move(colorLocation);
+                Location gouZiLocation = FindPicLocation.findColor(new int[]{255,25,56}, gouZiArea, gouZiAreaLeftTop);
+                Location fishLocation = FindPicLocation.findColor(new int[]{250,250,250}, fishArea, fishAreaLeftTop);
+                System.out.println("gouZi:"+gouZiLocation.getX() + "----" + gouZiLocation.getY() + "====fish:"+fishLocation.getX() + "----" + fishLocation.getY());
+                mouse.move(new Location(1260,826));
+                if(gouZiLocation.getX() > fishLocation.getX()){
+                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                } else {
+                    robot.mousePress(InputEvent.BUTTON1_MASK);
+                }
             } catch (Exception e){
                 e.printStackTrace();
             }
-//            Thread.sleep(5000);
-//        }
+            Thread.sleep(100);
+        }
         // 第三步：找到矿石区域
         // 第四步：匹配是否挖矿
         // =================
@@ -97,7 +122,9 @@ public class Fishing {
     public static void main(String[] args) throws AWTException, IOException, InterruptedException {
         Robot robot = new Robot();
         // 目标图
-        Fishing fishing = new Fishing(robot, new Location(470,328), new Location(858,356));
+        Fishing fishing = new Fishing(robot,
+                new Location(600,460), new Location(979,465),
+                new Location(600,423), new Location(979,425));
         fishing.start();
     }
 }
