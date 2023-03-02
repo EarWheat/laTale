@@ -3,12 +3,15 @@ package com.laTale.script;
 import com.laTale.common.FindPicLocation;
 import com.laTale.common.Mouse;
 import com.laTale.model.Location;
+import com.laTale.util.ImageUtil;
+import org.omg.PortableInterceptor.INACTIVE;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @Desc: 钓鱼
@@ -19,15 +22,6 @@ import java.io.IOException;
 public class Fishing {
     public static final String FISH_IMG_PATH = "/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/fishing/fish.png";
     public static final String GOU_IMG_PATH = "/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/fishing/gouzi.png";
-    /**
-     * 钻头位置
-     */
-    public Location drill;
-
-    /**
-     * 矿石位置
-     */
-    public Location mineral;
 
     /**
      * 钓鱼界面左上角
@@ -35,9 +29,19 @@ public class Fishing {
     public Location fishAreaLeftTop;
 
     /**
-     * 挖矿界面右下角
+     * 钓鱼界面右下角
      */
     public Location fishAreaRightBottom;
+
+    /**
+     * 钓鱼界面宽
+     */
+    public Integer fishAreaWidth;
+
+    /**
+     * 钓鱼界面高
+     */
+    public Integer fishAreaHeight;
 
     /**
      * 点击开始挖矿位置
@@ -46,8 +50,20 @@ public class Fishing {
 
     public Robot robot;
 
-    public Fishing(Robot robot) {
+    public Fishing(Robot robot, Location fishAreaLeftTop, Location fishAreaRightBottom) {
         this.robot = robot;
+        this.fishAreaLeftTop = fishAreaLeftTop;
+        this.fishAreaRightBottom = fishAreaRightBottom;
+        this.fishAreaWidth = fishAreaRightBottom.getX() - fishAreaLeftTop.getX();
+        this.fishAreaHeight = fishAreaRightBottom.getY() - fishAreaLeftTop.getY();
+    }
+
+    public Fishing(Robot robot, Location fishAreaLeftTop, Integer fishAreaWidth, Integer fishAreaHeight) {
+        this.robot = robot;
+        this.fishAreaLeftTop = fishAreaLeftTop;
+        this.fishAreaWidth = fishAreaWidth;
+        this.fishAreaHeight = fishAreaHeight;
+        this.fishAreaRightBottom = new Location(fishAreaLeftTop.getX() + fishAreaWidth, fishAreaLeftTop.getY() + fishAreaHeight);
     }
 
     public void start() throws IOException, InterruptedException {
@@ -57,21 +73,21 @@ public class Fishing {
 //        Mouse.click(robot, startMining.getX(), startMining.getY());
         // ================
         // 第一步：截图挖矿区域
-        fishAreaLeftTop = new Location(150,140);
         BufferedImage fishImg = ImageIO.read(new File(FISH_IMG_PATH));
         BufferedImage gouZiImg = ImageIO.read(new File(GOU_IMG_PATH));
-        while (true) {
-            BufferedImage fishArea = robot.createScreenCapture(new Rectangle(fishAreaLeftTop.getX(), fishAreaLeftTop.getY(), 1282, 800));
-            FindPicLocation.saveBfImage(fishArea);
-            // 第二步：找到钻头位置
+//        while (true) {
+            BufferedImage fishArea = robot.createScreenCapture(new Rectangle(fishAreaLeftTop.getX(), fishAreaLeftTop.getY(), fishAreaWidth, fishAreaHeight));
+            ImageUtil.saveBfImage(fishArea);
+            // 第二步：找到钻头和鱼的位置
             try {
-                Location location = FindPicLocation.find(fishImg, fishArea, fishAreaLeftTop);
-                mouse.move(location);
+//                Location location = FindPicLocation.findImg(fishImg, fishArea, fishAreaLeftTop);
+                Location colorLocation = FindPicLocation.findColor(new int[]{250,250,250}, fishArea, fishAreaLeftTop);
+                mouse.move(colorLocation);
             } catch (Exception e){
                 e.printStackTrace();
             }
-            Thread.sleep(5000);
-        }
+//            Thread.sleep(5000);
+//        }
         // 第三步：找到矿石区域
         // 第四步：匹配是否挖矿
         // =================
@@ -81,12 +97,7 @@ public class Fishing {
     public static void main(String[] args) throws AWTException, IOException, InterruptedException {
         Robot robot = new Robot();
         // 目标图
-//        BufferedImage drill = robot.createScreenCapture(new Rectangle(963, 396, 5, 5));
-//        FindPicLocation.saveBfImage(drill, FISH_IMG_PATH);
-//        int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-//        int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-////        Fishing fishing = new Fishing(robot, new Location(0, 0), new Location(width,height));
-        Fishing fishing = new Fishing(robot);
+        Fishing fishing = new Fishing(robot, new Location(470,328), new Location(858,356));
         fishing.start();
     }
 }

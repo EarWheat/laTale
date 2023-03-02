@@ -1,9 +1,9 @@
 package com.laTale.script;
 
 import com.laTale.common.FindPicLocation;
-import com.laTale.common.FindPicPoint;
 import com.laTale.common.Mouse;
 import com.laTale.model.Location;
+import com.laTale.util.ImageUtil;
 import lombok.Data;
 
 import javax.imageio.ImageIO;
@@ -64,11 +64,11 @@ public class Mining implements Serializable {
         // 第一步：截图挖矿区域
         minerAreaLeftTop = new Location(530,130);
         BufferedImage minerArea = robot.createScreenCapture(new Rectangle(minerAreaLeftTop.getX(), minerAreaLeftTop.getY(), 600, 400));
-        FindPicLocation.saveBfImage(minerArea);
+        ImageUtil.saveBfImage(minerArea);
         // 第二步：找到钻头位置
         try {
             BufferedImage drillImg = ImageIO.read(new File(DRILL_IMG_PATH));
-            Location location = FindPicLocation.find(drillImg, minerArea, minerAreaLeftTop);
+            Location location = FindPicLocation.findImg(drillImg, minerArea, minerAreaLeftTop);
             mouse.move(location);
         } catch (Exception e){
             e.printStackTrace();
@@ -83,7 +83,7 @@ public class Mining implements Serializable {
         Robot robot = new Robot();
         // 目标图
         BufferedImage drill = robot.createScreenCapture(new Rectangle(790, 410, 10, 20));
-        FindPicLocation.saveBfImage(drill, DRILL_IMG_PATH);
+        ImageUtil.saveBfImage(drill, DRILL_IMG_PATH);
 //        int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 //        int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 //        Mining mining = new Mining(robot, new Location(0, 0), new Location(width,height));
