@@ -21,4 +21,9 @@ public class Location implements Serializable {
     private static final long serialVersionUID = -683370964673661228L;
     public int x;
     public int y;
+
+
+    public boolean isFind(){
+        return x != 0 && y != 0;
+    }
 }

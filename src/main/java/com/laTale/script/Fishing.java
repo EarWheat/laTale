@@ -101,8 +101,13 @@ public class Fishing {
             try {
                 Location gouZiLocation = FindPicLocation.findColor(new int[]{255,25,56}, gouZiArea, gouZiAreaLeftTop);
                 Location fishLocation = FindPicLocation.findColor(new int[]{250,250,250}, fishArea, fishAreaLeftTop);
-                System.out.println("gouZi:"+gouZiLocation.getX() + "----" + gouZiLocation.getY() + "====fish:"+fishLocation.getX() + "----" + fishLocation.getY());
-                mouse.move(new Location(1260,826));
+                if(!gouZiLocation.isFind() && !fishLocation.isFind()){
+                    mouse.click(990,700);
+                    mouse.click(1260,826);
+                    continue;
+                }
+                // 移动到钓鱼操作按钮
+                mouse.move(1260,826);
                 if(gouZiLocation.getX() > fishLocation.getX()){
                     robot.mouseRelease(InputEvent.BUTTON1_MASK);
                 } else {
@@ -111,7 +116,6 @@ public class Fishing {
             } catch (Exception e){
                 e.printStackTrace();
             }
-            Thread.sleep(100);
         }
         // 第三步：找到矿石区域
         // 第四步：匹配是否挖矿
