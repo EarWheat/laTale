@@ -8,7 +8,8 @@ package com.laTale.model;
  */
 public enum TargetEnum {
     FISH(250, 250, 250),
-    FISH_GOUZI(255, 25, 56);
+    FISH_GOUZI(255, 25, 56),
+    DRILL_ZUANTOU(250,250,250);
 
     private Integer r;
     private Integer g;

@@ -29,4 +29,20 @@ public enum AreaEnum {
     public Location getBottomRight() {
         return bottomRight;
     }
+
+    public Integer getX() {
+        return leftTop.getX();
+    }
+
+    public Integer getY() {
+        return leftTop.getY();
+    }
+
+    public Integer getWidth() {
+        return bottomRight.getX() - leftTop.getX();
+    }
+
+    public Integer getHigh() {
+        return bottomRight.getY() - leftTop.getY();
+    }
 }

@@ -2,12 +2,16 @@ package com.laTale.script;
 
 import com.laTale.common.FindPicLocation;
 import com.laTale.common.Mouse;
+import com.laTale.model.AreaEnum;
+import com.laTale.model.ButtonEnum;
 import com.laTale.model.Location;
+import com.laTale.model.TargetEnum;
 import com.laTale.util.ImageUtil;
 import lombok.Data;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.Serializable;
@@ -70,28 +74,42 @@ public class Mining implements Serializable {
         this.drillAreaHeight = drillAreaRightBottom.getY() - drillAreaLeftTop.getY();
     }
 
-    public void start(){
+    public void start(Integer times){
         Mouse mouse = new Mouse(robot);
-        // 外层循环
-        // 点击开始挖矿
-//        Mouse.click(robot, startMining.getX(), startMining.getY());
-        // ================
-        // 第一步：截图挖矿区域
-//        BufferedImage drillArea = robot.createScreenCapture(new Rectangle(drillAreaLeftTop.getX(), drillAreaLeftTop.getY(), drillAreaWidth, drillAreaHeight));
-//        BufferedImage gouZiArea = robot.createScreenCapture(new Rectangle(gouZiAreaLeftTop.getX(), gouZiAreaLeftTop.getY(), gouZiAreaWidth, gouZiAreaHeight));
-////        ImageUtil.saveBfImage(minerArea);
-//        // 第二步：找到钻头位置
-//        try {
-//            BufferedImage drillImg = ImageIO.read(new File(DRILL_IMG_PATH));
-//            Location location = FindPicLocation.findImg(drillImg, minerArea, minerAreaLeftTop);
-//            mouse.move(location);
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-        // 第三步：找到矿石区域
-        // 第四步：匹配是否挖矿
-        // =================
-        // 点击挖矿
+        // 丢失钓鱼区域次数，用于判断是否补充活力药剂
+        int missTime = 0;
+        int loop = 0;
+        while (loop++ < times) {
+            // 挖矿区域
+            BufferedImage oreArea = robot.createScreenCapture(new Rectangle(AreaEnum.DRILL_ORE.getX(), AreaEnum.DRILL_ORE.getY(), AreaEnum.DRILL_ORE.getWidth(), AreaEnum.DRILL_ORE.getHigh()));
+            // 钻头区域
+            BufferedImage zuanTouArea = robot.createScreenCapture(new Rectangle(AreaEnum.DRILL_ZUANTOU.getX(), AreaEnum.DRILL_ZUANTOU.getY(), AreaEnum.FISHING_GOUZI.getWidth(), AreaEnum.DRILL_ZUANTOU.getHigh()));
+            try {
+                // 第二步：找到吊钩和鱼的位置
+                Location zuanTouLocation = FindPicLocation.findColor(TargetEnum.DRILL_ZUANTOU.getRGB(), zuanTouArea, AreaEnum.DRILL_ZUANTOU.getLeftTop());
+//                Location oreLocation = FindPicLocation.findColor(TargetEnum.DRILL_O.getRGB(), fishArea, fishAreaLeftTop);
+//                if (!gouZiLocation.isFind() && !fishLocation.isFind()) {
+//                    if (missTime >= 20) {
+//                        fillActivity(mouse);
+//                        missTime = 0;
+//                    }
+//                    mouse.click(990, 700);
+//                    mouse.click(ButtonEnum.FISHING);
+//                    missTime++;
+//                    continue;
+//                }
+//                missTime = 0;
+//                // 移动到钓鱼操作按钮
+//                mouse.move(ButtonEnum.FISHING);
+//                if (gouZiLocation.getX() > fishLocation.getX()) {
+//                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+//                } else {
+//                    robot.mousePress(InputEvent.BUTTON1_MASK);
+//                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void main(String[] args) throws AWTException {
