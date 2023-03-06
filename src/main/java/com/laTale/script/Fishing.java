@@ -2,8 +2,10 @@ package com.laTale.script;
 
 import com.laTale.common.FindPicLocation;
 import com.laTale.common.Mouse;
+import com.laTale.model.AreaEnum;
 import com.laTale.model.ButtonEnum;
 import com.laTale.model.Location;
+import com.laTale.model.TargetEnum;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -97,21 +99,21 @@ public class Fishing {
             BufferedImage gouZiArea = robot.createScreenCapture(new Rectangle(gouZiAreaLeftTop.getX(), gouZiAreaLeftTop.getY(), gouZiAreaWidth, gouZiAreaHeight));
             try {
                 // 第二步：找到吊钩和鱼的位置
-                Location gouZiLocation = FindPicLocation.findColor(new int[]{255, 25, 56}, gouZiArea, gouZiAreaLeftTop);
-                Location fishLocation = FindPicLocation.findColor(new int[]{250, 250, 250}, fishArea, fishAreaLeftTop);
+                Location gouZiLocation = FindPicLocation.findColor(TargetEnum.FISH_GOUZI.getRGB(), gouZiArea, gouZiAreaLeftTop);
+                Location fishLocation = FindPicLocation.findColor(TargetEnum.FISH.getRGB(), fishArea, fishAreaLeftTop);
                 if (!gouZiLocation.isFind() && !fishLocation.isFind()) {
                     if (missTime >= 20) {
                         fillActivity(mouse);
                         missTime = 0;
                     }
                     mouse.click(990, 700);
-                    mouse.click(1260, 826);
+                    mouse.click(ButtonEnum.FISHING);
                     missTime++;
                     continue;
                 }
                 missTime = 0;
                 // 移动到钓鱼操作按钮
-                mouse.move(1260, 826);
+                mouse.move(ButtonEnum.FISHING);
                 if (gouZiLocation.getX() > fishLocation.getX()) {
                     robot.mouseRelease(InputEvent.BUTTON1_MASK);
                 } else {

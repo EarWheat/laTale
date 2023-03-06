@@ -1,13 +1,14 @@
 package com.laTale.model;
 
 /**
- * @Desc:
+ * @Desc: 按钮枚举
  * @Author: 泽露
  * @Date: 2023/3/6 3:47 PM
  * @Version: 1.initial version; 2023/3/6 3:47 PM
  */
 public enum ButtonEnum {
     CANCEL_FISH("取消钓鱼", 1200,700),
+    FISHING("开始钓鱼", 1260, 826),
     OPEN_PACKAGE("打开背包",1240,470),
     CLOSE_PACKAGE("关闭背包",1280, 330),
     USE_ITEM("使用物品",900,440)

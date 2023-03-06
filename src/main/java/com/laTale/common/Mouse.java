@@ -44,10 +44,10 @@ public class Mouse {
 
     /**
      * 点击某个按钮
-     * @param button
+     * @param buttonEnum
      */
-    public void click(ButtonEnum button){
-        robot.mouseMove(button.getX(), button.getY());
+    public void click(ButtonEnum buttonEnum){
+        robot.mouseMove(buttonEnum.getX(), buttonEnum.getY());
         robot.mousePress(InputEvent.BUTTON1_MASK);
         robot.setAutoDelay(100);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
@@ -68,5 +68,9 @@ public class Mouse {
      */
     public void move(Location location) {
         robot.mouseMove(location.getX(), location.getY());
+    }
+
+    public void move(ButtonEnum buttonEnum){
+        robot.mouseMove(buttonEnum.getX(), buttonEnum.getY());
     }
 }
