@@ -29,30 +29,45 @@ public class Mining implements Serializable {
     public Location drill;
 
     /**
-     * 矿石位置
+     * 钻头界面左上角
      */
-    public Location mineral;
+    public Location drillAreaLeftTop;
 
     /**
-     * 挖矿界面左上角
+     * 钻头界面右下角
      */
-    public Location minerAreaLeftTop;
+    public Location drillAreaRightBottom;
 
     /**
-     * 挖矿界面右下角
+     * 矿区左上角
      */
-    public Location minerAreaRightBottom;
+    public Location mineralAreaLeftTop;
 
     /**
-     * 点击开始挖矿位置
+     * 矿区右下角
      */
-    public Location startMining;
+    public Location mineralAreaRightBottom;
 
+    /**
+     * 钻头界面宽
+     */
+    public Integer drillAreaWidth;
+
+    /**
+     * 钻头界面高
+     */
+    public Integer drillAreaHeight;
 
     public Robot robot;
 
-    public Mining(Robot robot) {
+    public Mining(Robot robot, Location drillAreaLeftTop, Location drillAreaRightBottom, Location mineralAreaLeftTop, Location mineralAreaRightBottom) {
         this.robot = robot;
+        this.drillAreaLeftTop = drillAreaLeftTop;
+        this.drillAreaRightBottom = drillAreaRightBottom;
+        this.mineralAreaLeftTop = mineralAreaLeftTop;
+        this.mineralAreaRightBottom = mineralAreaRightBottom;
+        this.drillAreaWidth = drillAreaRightBottom.getX() - drillAreaLeftTop.getX();
+        this.drillAreaHeight = drillAreaRightBottom.getY() - drillAreaLeftTop.getY();
     }
 
     public void start(){
@@ -62,17 +77,17 @@ public class Mining implements Serializable {
 //        Mouse.click(robot, startMining.getX(), startMining.getY());
         // ================
         // 第一步：截图挖矿区域
-        minerAreaLeftTop = new Location(530,130);
-        BufferedImage minerArea = robot.createScreenCapture(new Rectangle(minerAreaLeftTop.getX(), minerAreaLeftTop.getY(), 600, 400));
-        ImageUtil.saveBfImage(minerArea);
-        // 第二步：找到钻头位置
-        try {
-            BufferedImage drillImg = ImageIO.read(new File(DRILL_IMG_PATH));
-            Location location = FindPicLocation.findImg(drillImg, minerArea, minerAreaLeftTop);
-            mouse.move(location);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+//        BufferedImage drillArea = robot.createScreenCapture(new Rectangle(drillAreaLeftTop.getX(), drillAreaLeftTop.getY(), drillAreaWidth, drillAreaHeight));
+//        BufferedImage gouZiArea = robot.createScreenCapture(new Rectangle(gouZiAreaLeftTop.getX(), gouZiAreaLeftTop.getY(), gouZiAreaWidth, gouZiAreaHeight));
+////        ImageUtil.saveBfImage(minerArea);
+//        // 第二步：找到钻头位置
+//        try {
+//            BufferedImage drillImg = ImageIO.read(new File(DRILL_IMG_PATH));
+//            Location location = FindPicLocation.findImg(drillImg, minerArea, minerAreaLeftTop);
+//            mouse.move(location);
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
         // 第三步：找到矿石区域
         // 第四步：匹配是否挖矿
         // =================
@@ -82,12 +97,7 @@ public class Mining implements Serializable {
     public static void main(String[] args) throws AWTException {
         Robot robot = new Robot();
         // 目标图
-        BufferedImage drill = robot.createScreenCapture(new Rectangle(790, 410, 10, 20));
-        ImageUtil.saveBfImage(drill, DRILL_IMG_PATH);
-//        int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-//        int height = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 //        Mining mining = new Mining(robot, new Location(0, 0), new Location(width,height));
-        Mining mining = new Mining(robot);
-        mining.start();
+//        mining.start();
     }
 }

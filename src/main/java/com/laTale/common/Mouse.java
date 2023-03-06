@@ -1,5 +1,6 @@
 package com.laTale.common;
 
+import com.laTale.model.ButtonEnum;
 import com.laTale.model.Location;
 import lombok.AllArgsConstructor;
 
@@ -36,6 +37,17 @@ public class Mouse {
      * 鼠标直接点击
      */
     public void click() {
+        robot.mousePress(InputEvent.BUTTON1_MASK);
+        robot.setAutoDelay(100);
+        robot.mouseRelease(InputEvent.BUTTON1_MASK);
+    }
+
+    /**
+     * 点击某个按钮
+     * @param button
+     */
+    public void click(ButtonEnum button){
+        robot.mouseMove(button.getX(), button.getY());
         robot.mousePress(InputEvent.BUTTON1_MASK);
         robot.setAutoDelay(100);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);

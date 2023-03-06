@@ -2,17 +2,13 @@ package com.laTale.script;
 
 import com.laTale.common.FindPicLocation;
 import com.laTale.common.Mouse;
+import com.laTale.model.ButtonEnum;
 import com.laTale.model.Location;
-import com.laTale.util.ImageUtil;
-import org.omg.PortableInterceptor.INACTIVE;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * @Desc: 钓鱼
@@ -21,8 +17,6 @@ import java.util.Arrays;
  * @Version: 1.initial version; 2023/2/14 7:17 PM
  */
 public class Fishing {
-    public static final String FISH_IMG_PATH = "/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/fishing/fish.png";
-    public static final String GOU_IMG_PATH = "/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/fishing/gouzi.png";
 
     /**
      * 钓鱼界面左上角
@@ -86,34 +80,44 @@ public class Fishing {
         this.fishAreaRightBottom = new Location(fishAreaLeftTop.getX() + fishAreaWidth, fishAreaLeftTop.getY() + fishAreaHeight);
     }
 
-    public void start() throws IOException, InterruptedException {
+    /**
+     * 开始执行times次
+     *
+     * @param times
+     */
+    public void start(Integer times) {
         Mouse mouse = new Mouse(robot);
-        // 外层循环
-        // 点击开始挖矿
-//        Mouse.click(robot, startMining.getX(), startMining.getY());
-        // ================
-        // 第一步：截图挖矿区域
-        while (true) {
+        // 丢失钓鱼区域次数，用于判断是否补充活力药剂
+        int missTime = 0;
+        int loop = 0;
+        while (loop++ < times) {
+            // 钓鱼区域
             BufferedImage fishArea = robot.createScreenCapture(new Rectangle(fishAreaLeftTop.getX(), fishAreaLeftTop.getY(), fishAreaWidth, fishAreaHeight));
+            // 吊钩区域
             BufferedImage gouZiArea = robot.createScreenCapture(new Rectangle(gouZiAreaLeftTop.getX(), gouZiAreaLeftTop.getY(), gouZiAreaWidth, gouZiAreaHeight));
-            ImageUtil.saveBfImage(gouZiArea);
-            // 第二步：找到钻头和鱼的位置
             try {
-                Location gouZiLocation = FindPicLocation.findColor(new int[]{255,25,56}, gouZiArea, gouZiAreaLeftTop);
-                Location fishLocation = FindPicLocation.findColor(new int[]{250,250,250}, fishArea, fishAreaLeftTop);
-                if(!gouZiLocation.isFind() && !fishLocation.isFind()){
-                    mouse.click(990,700);
-                    mouse.click(1260,826);
+                // 第二步：找到吊钩和鱼的位置
+                Location gouZiLocation = FindPicLocation.findColor(new int[]{255, 25, 56}, gouZiArea, gouZiAreaLeftTop);
+                Location fishLocation = FindPicLocation.findColor(new int[]{250, 250, 250}, fishArea, fishAreaLeftTop);
+                if (!gouZiLocation.isFind() && !fishLocation.isFind()) {
+                    if (missTime >= 20) {
+                        fillActivity(mouse);
+                        missTime = 0;
+                    }
+                    mouse.click(990, 700);
+                    mouse.click(1260, 826);
+                    missTime++;
                     continue;
                 }
+                missTime = 0;
                 // 移动到钓鱼操作按钮
-                mouse.move(1260,826);
-                if(gouZiLocation.getX() > fishLocation.getX()){
+                mouse.move(1260, 826);
+                if (gouZiLocation.getX() > fishLocation.getX()) {
                     robot.mouseRelease(InputEvent.BUTTON1_MASK);
                 } else {
                     robot.mousePress(InputEvent.BUTTON1_MASK);
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -123,12 +127,33 @@ public class Fishing {
         // 点击挖矿
     }
 
+    /**
+     * 补充活力药剂
+     */
+    public void fillActivity(Mouse mouse) {
+        // 取消钓鱼
+        mouse.click(ButtonEnum.CANCEL_FISH);
+        // 点开背包
+        mouse.click(ButtonEnum.OPEN_PACKAGE);
+        // 补充活力药剂
+        mouse.click(1120, 800);
+        // 点击使用
+        mouse.click(ButtonEnum.USE_ITEM);
+        // 补充活力药剂,第二次位置不一样
+        mouse.click(1120, 700);
+        // 点击使用
+        mouse.click(ButtonEnum.USE_ITEM);
+        // 关闭背包
+        mouse.click(ButtonEnum.CLOSE_PACKAGE);
+
+    }
+
     public static void main(String[] args) throws AWTException, IOException, InterruptedException {
         Robot robot = new Robot();
         // 目标图
         Fishing fishing = new Fishing(robot,
-                new Location(600,460), new Location(979,465),
-                new Location(600,423), new Location(979,425));
-        fishing.start();
+                new Location(600, 460), new Location(979, 465),
+                new Location(600, 423), new Location(979, 425));
+        fishing.start(2000);
     }
 }
