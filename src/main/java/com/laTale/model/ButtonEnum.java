@@ -11,7 +11,8 @@ public enum ButtonEnum {
     FISHING("开始钓鱼", 1260, 826),
     OPEN_PACKAGE("打开背包",1240,470),
     CLOSE_PACKAGE("关闭背包",1280, 330),
-    USE_ITEM("使用物品",900,440)
+    USE_ITEM("使用物品",920,400),
+    ACTIVITY("活力药剂",1144, 696)
     ;
     ButtonEnum(String name, Integer x, Integer y) {
         this.name = name;

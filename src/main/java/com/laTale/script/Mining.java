@@ -79,7 +79,7 @@ public class Mining implements Serializable {
         // 丢失钓鱼区域次数，用于判断是否补充活力药剂
         int missTime = 0;
         int loop = 0;
-        while (loop++ < times) {
+        while (true) {
             // 挖矿区域
             BufferedImage oreArea = robot.createScreenCapture(new Rectangle(AreaEnum.DRILL_ORE.getX(), AreaEnum.DRILL_ORE.getY(), AreaEnum.DRILL_ORE.getWidth(), AreaEnum.DRILL_ORE.getHigh()));
             // 钻头区域

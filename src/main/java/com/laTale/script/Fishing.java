@@ -1,11 +1,13 @@
 package com.laTale.script;
 
+import com.alibaba.fastjson.JSONObject;
 import com.laTale.common.FindPicLocation;
 import com.laTale.common.Mouse;
 import com.laTale.model.AreaEnum;
 import com.laTale.model.ButtonEnum;
 import com.laTale.model.Location;
 import com.laTale.model.TargetEnum;
+import com.laTale.util.ImageUtil;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -92,7 +94,7 @@ public class Fishing {
         // 丢失钓鱼区域次数，用于判断是否补充活力药剂
         int missTime = 0;
         int loop = 0;
-        while (loop++ < times) {
+        while (true) {
             // 钓鱼区域
             BufferedImage fishArea = robot.createScreenCapture(new Rectangle(fishAreaLeftTop.getX(), fishAreaLeftTop.getY(), fishAreaWidth, fishAreaHeight));
             // 吊钩区域
@@ -114,6 +116,7 @@ public class Fishing {
                 missTime = 0;
                 // 移动到钓鱼操作按钮
                 mouse.move(ButtonEnum.FISHING);
+                System.out.println("gouzi:" + JSONObject.toJSONString(gouZiLocation) + "=======fish:" + JSONObject.toJSONString(fishLocation));
                 if (gouZiLocation.getX() > fishLocation.getX()) {
                     robot.mouseRelease(InputEvent.BUTTON1_MASK);
                 } else {
@@ -134,11 +137,11 @@ public class Fishing {
         // 点开背包
         mouse.click(ButtonEnum.OPEN_PACKAGE);
         // 补充活力药剂
-        mouse.click(1120, 800);
+        mouse.click(ButtonEnum.ACTIVITY);
         // 点击使用
         mouse.click(ButtonEnum.USE_ITEM);
         // 补充活力药剂,第二次位置不一样
-        mouse.click(1120, 700);
+        mouse.click(ButtonEnum.ACTIVITY);
         // 点击使用
         mouse.click(ButtonEnum.USE_ITEM);
         // 关闭背包
@@ -150,8 +153,8 @@ public class Fishing {
         Robot robot = new Robot();
         // 目标图
         Fishing fishing = new Fishing(robot,
-                new Location(600, 460), new Location(979, 465),
-                new Location(600, 423), new Location(979, 425));
+                new Location(600, 430), new Location(979, 433),
+                new Location(600, 392), new Location(979, 394));
         fishing.start(2000);
     }
 }
