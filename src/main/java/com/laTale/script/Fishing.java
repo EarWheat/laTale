@@ -108,15 +108,14 @@ public class Fishing {
                         fillActivity(mouse);
                         missTime = 0;
                     }
-                    mouse.click(990, 700);
-                    mouse.click(ButtonEnum.FISHING);
+                    mouse.click(ButtonEnum.START_LIFE_SKILL);
+                    mouse.click(ButtonEnum.LIFE_SKILL);
                     missTime++;
                     continue;
                 }
                 missTime = 0;
                 // 移动到钓鱼操作按钮
-                mouse.move(ButtonEnum.FISHING);
-                System.out.println("gouzi:" + JSONObject.toJSONString(gouZiLocation) + "=======fish:" + JSONObject.toJSONString(fishLocation));
+                mouse.move(ButtonEnum.LIFE_SKILL);
                 if (gouZiLocation.getX() > fishLocation.getX()) {
                     robot.mouseRelease(InputEvent.BUTTON1_MASK);
                 } else {

@@ -25,7 +25,6 @@ import java.io.Serializable;
 @Data
 public class Mining implements Serializable {
 
-    public static final String DRILL_IMG_PATH = "/Users/liuzhaolu/IdeaProjects/laTale/src/main/resources/images/mining/drill.png";
     private static final long serialVersionUID = 3500613666762357310L;
     /**
      * 钻头位置

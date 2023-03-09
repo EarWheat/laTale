@@ -7,13 +7,14 @@ package com.laTale.model;
  * @Version: 1.initial version; 2023/3/6 3:47 PM
  */
 public enum ButtonEnum {
-    CANCEL_FISH("取消钓鱼", 1200,700),
-    FISHING("开始钓鱼", 1260, 826),
-    OPEN_PACKAGE("打开背包",1240,470),
-    CLOSE_PACKAGE("关闭背包",1280, 330),
-    USE_ITEM("使用物品",920,400),
-    ACTIVITY("活力药剂",1144, 696)
-    ;
+    START_LIFE_SKILL("开始生活技能", 1015, 665),
+    CANCEL_FISH("取消钓鱼", 1200, 700),
+    LIFE_SKILL("开始钓鱼", 1260, 786),
+    OPEN_PACKAGE("打开背包", 1240, 470),
+    CLOSE_PACKAGE("关闭背包", 1280, 330),
+    USE_ITEM("使用物品", 920, 400),
+    ACTIVITY("活力药剂", 1244, 696);
+
     ButtonEnum(String name, Integer x, Integer y) {
         this.name = name;
         this.x = x;

@@ -39,7 +39,7 @@ public class Collecting {
                 mouse.click(990, 700);
                 int i = 0;
                 while (i++ < 10) {
-                    mouse.click(ButtonEnum.FISHING);
+                    mouse.click(ButtonEnum.LIFE_SKILL);
                 }
                 missTime++;
                 // 循环40次补给药品
