@@ -115,7 +115,7 @@ public class Fishing {
                 }
                 missTime = 0;
                 // 移动到钓鱼操作按钮
-                mouse.move(ButtonEnum.LIFE_SKILL);
+                mouse.move(ButtonEnum.START_LIFE_SKILL);
                 if (gouZiLocation.getX() > fishLocation.getX()) {
                     robot.mouseRelease(InputEvent.BUTTON1_MASK);
                 } else {
@@ -152,8 +152,8 @@ public class Fishing {
         Robot robot = new Robot();
         // 目标图
         Fishing fishing = new Fishing(robot,
-                new Location(600, 430), new Location(979, 433),
-                new Location(600, 392), new Location(979, 394));
+                new Location(784, 475), new Location(1042, 478),
+                new Location(784, 451), new Location(1042, 453));
         fishing.start(2000);
     }
 }

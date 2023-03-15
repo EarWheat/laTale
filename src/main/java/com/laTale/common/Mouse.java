@@ -29,7 +29,7 @@ public class Mouse {
     public void click(Integer x, Integer y) {
         robot.mouseMove(x, y);
         robot.mousePress(InputEvent.BUTTON1_MASK);
-        robot.setAutoDelay(100);
+        robot.setAutoDelay(50);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
     }
 
@@ -49,7 +49,7 @@ public class Mouse {
     public void click(ButtonEnum buttonEnum){
         robot.mouseMove(buttonEnum.getX(), buttonEnum.getY());
         robot.mousePress(InputEvent.BUTTON1_MASK);
-        robot.setAutoDelay(100);
+        robot.setAutoDelay(50);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
     }
 

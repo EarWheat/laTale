@@ -36,14 +36,14 @@ public class Collecting {
         int loop = 0;
         while (loop++ < times) {
             try {
-                mouse.click(990, 700);
+                mouse.click(ButtonEnum.LIFE_SKILL);
                 int i = 0;
-                while (i++ < 10) {
-                    mouse.click(ButtonEnum.LIFE_SKILL);
+                while (i++ < 20) {
+                    mouse.click(ButtonEnum.START_LIFE_SKILL);
                 }
                 missTime++;
                 // 循环40次补给药品
-                if (loop % 40 == 0) {
+                if (loop % 30 == 0) {
                     fillActivity(mouse);
                 }
             } catch (Exception e) {
@@ -82,7 +82,7 @@ public class Collecting {
     public static void main(String[] args) throws AWTException, IOException, InterruptedException {
         Robot robot = new Robot();
         Collecting collecting = new Collecting(robot);
-        collecting.start();
+        collecting.start(10000);
 
     }
 }
