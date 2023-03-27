@@ -13,7 +13,9 @@ public enum ButtonEnum {
     OPEN_PACKAGE("打开背包", 1210, 480),
     CLOSE_PACKAGE("关闭背包", 1246, 394),
     USE_ITEM("使用物品", 986, 464),
-    ACTIVITY("活力药剂", 1134, 665);
+    ACTIVITY("活力药剂", 1134, 665),
+    LEVEL_UP("强化",1120,730),
+    CONFIRM("确认",960,640);
 
     ButtonEnum(String name, Integer x, Integer y) {
         this.name = name;
