@@ -15,7 +15,23 @@ public enum ButtonEnum {
     USE_ITEM("使用物品", 986, 464),
     ACTIVITY("活力药剂", 1134, 665),
     LEVEL_UP("强化",1120,730),
-    CONFIRM("确认",960,640);
+    CONFIRM("确认",960,640),
+
+
+
+
+
+
+    XIANLING("仙灵店铺", 923, 728),
+    CLOSE_XIANLING("关闭仙灵店铺",600, 247),
+    BUY_FLAG_LOCATION("仙灵店铺购买旗帜", 512, 280),
+    BUY_SURE("仙灵店铺购买确认",590,565),
+    //    ITEM_NUM_ADD("商品数量增加",0,0),
+    BUY_ITEM("购买物品", 0, 0),
+    OPEN_PACKET("打开背包", 0, 0),
+    WAREHOUSE_PAGE_START("仓库页码起始位置", 0,0),
+    WAREHOUSE_ITEM_START("仓库物品起始位置",0,0)
+    ;
 
     ButtonEnum(String name, Integer x, Integer y) {
         this.name = name;

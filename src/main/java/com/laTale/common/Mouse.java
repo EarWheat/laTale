@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.Locale;
 
 /**
@@ -44,9 +45,10 @@ public class Mouse {
 
     /**
      * 点击某个按钮
+     *
      * @param buttonEnum
      */
-    public void click(ButtonEnum buttonEnum){
+    public void click(ButtonEnum buttonEnum) {
         robot.mouseMove(buttonEnum.getX(), buttonEnum.getY());
         robot.mousePress(InputEvent.BUTTON1_MASK);
         robot.setAutoDelay(50);
@@ -54,7 +56,27 @@ public class Mouse {
     }
 
     /**
+     * 点击某个按钮
+     *
+     * @param buttonEnum
+     */
+    public void click3(ButtonEnum buttonEnum) {
+        robot.mouseMove(buttonEnum.getX(), buttonEnum.getY());
+        robot.mousePress(InputEvent.BUTTON3_MASK);
+        robot.setAutoDelay(50);
+        robot.mouseRelease(InputEvent.BUTTON3_MASK);
+    }
+
+    public void click3(Integer x, Integer y) {
+        robot.mouseMove(x, y);
+        robot.mousePress(InputEvent.BUTTON3_MASK);
+        robot.setAutoDelay(50);
+        robot.mouseRelease(InputEvent.BUTTON3_MASK);
+    }
+
+    /**
      * 移动鼠标
+     *
      * @param x
      * @param y
      */
@@ -64,13 +86,14 @@ public class Mouse {
 
     /**
      * 移动鼠标
+     *
      * @param location
      */
     public void move(Location location) {
         robot.mouseMove(location.getX(), location.getY());
     }
 
-    public void move(ButtonEnum buttonEnum){
+    public void move(ButtonEnum buttonEnum) {
         robot.mouseMove(buttonEnum.getX(), buttonEnum.getY());
     }
 }
